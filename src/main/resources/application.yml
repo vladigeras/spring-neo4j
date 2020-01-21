@@ -1,0 +1,10 @@
+datasource:
+  host: localhost
+  port: 7687
+  username: test-user
+  password: test-password
+
+management:
+  endpoint:
+    health:
+      show-details: always
