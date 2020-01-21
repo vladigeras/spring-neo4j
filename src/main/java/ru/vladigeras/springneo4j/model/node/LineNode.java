@@ -1,4 +1,4 @@
-package ru.vladigeras.springneo4j.model.entity;
+package ru.vladigeras.springneo4j.model.node;
 
 import org.neo4j.ogm.annotation.*;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author vladi_geras on 09.01.2020
  */
 @NodeEntity("Line")
-public class LineEntity {
+public class LineNode {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -18,9 +18,9 @@ public class LineEntity {
 	private String name;
 
 	@Relationship(type = "CONTAINS_IN", direction = Relationship.INCOMING)
-	private List<StationEntity> stations = new ArrayList<>();
+	private List<StationNode> stations = new ArrayList<>();
 
-	public void addStation(StationEntity station) {
+	public void addStation(StationNode station) {
 		if (station != null) {
 			if (stations == null) stations = new ArrayList<>();
 			station.setLine(this);
@@ -36,12 +36,12 @@ public class LineEntity {
 		return name;
 	}
 
-	public LineEntity setName(String name) {
+	public LineNode setName(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public List<StationEntity> getStations() {
+	public List<StationNode> getStations() {
 		return stations;
 	}
 

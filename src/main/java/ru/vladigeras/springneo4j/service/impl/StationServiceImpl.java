@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vladigeras.springneo4j.model.dto.NewLine;
 import ru.vladigeras.springneo4j.model.dto.NewStation;
-import ru.vladigeras.springneo4j.model.entity.LineEntity;
-import ru.vladigeras.springneo4j.model.entity.StationEntity;
+import ru.vladigeras.springneo4j.model.node.LineNode;
+import ru.vladigeras.springneo4j.model.node.StationNode;
 import ru.vladigeras.springneo4j.repository.LineRepository;
 import ru.vladigeras.springneo4j.repository.StationRepository;
 import ru.vladigeras.springneo4j.service.StationService;
@@ -30,9 +30,9 @@ public class StationServiceImpl implements StationService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<StationEntity> get() {
-		List<StationEntity> result = new ArrayList<>();
-		Iterator<StationEntity> iterator = stationRepository.findAll().iterator();
+	public List<StationNode> get() {
+		List<StationNode> result = new ArrayList<>();
+		Iterator<StationNode> iterator = stationRepository.findAll().iterator();
 		iterator.forEachRemaining(result::add);
 		return result;
 	}
@@ -40,30 +40,30 @@ public class StationServiceImpl implements StationService {
 	@Transactional
 	@Override
 	public void save(NewStation station) {
-		StationEntity stationEntity = new StationEntity();
-		stationEntity.setName(station.getName());
+		StationNode stationNode = new StationNode();
+		stationNode.setName(station.getName());
 
 		Long lineId = station.getLineId();
 		if (lineId != null) {
-			Optional<LineEntity> optionalLineEntity = lineRepository.findById(lineId);
-			optionalLineEntity.ifPresent(lineEntity -> lineEntity.addStation(stationEntity));
+			Optional<LineNode> optionalLineEntity = lineRepository.findById(lineId);
+			optionalLineEntity.ifPresent(lineEntity -> lineEntity.addStation(stationNode));
 		}
-		stationRepository.save(stationEntity);
+		stationRepository.save(stationNode);
 	}
 
 	@Transactional
 	@Override
 	public void save(NewLine line) {
-		LineEntity lineEntity = new LineEntity();
-		lineEntity.setName(line.getName());
-		lineRepository.save(lineEntity);
+		LineNode lineNode = new LineNode();
+		lineNode.setName(line.getName());
+		lineRepository.save(lineNode);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<LineEntity> getLines() {
-		List<LineEntity> result = new ArrayList<>();
-		Iterator<LineEntity> iterator = lineRepository.findAll().iterator();
+	public List<LineNode> getLines() {
+		List<LineNode> result = new ArrayList<>();
+		Iterator<LineNode> iterator = lineRepository.findAll().iterator();
 		iterator.forEachRemaining(result::add);
 		return result;
 	}

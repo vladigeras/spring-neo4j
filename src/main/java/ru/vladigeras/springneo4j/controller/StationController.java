@@ -1,5 +1,8 @@
 package ru.vladigeras.springneo4j.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.vladigeras.springneo4j.mapper.StationMapper;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author vladi_geras on 09.01.2020
  */
+@Api(tags = "Stations")
 @RestController
 @RequestMapping("/v1/stations")
 public class StationController {
@@ -24,6 +28,7 @@ public class StationController {
 		this.stationService = stationService;
 	}
 
+	@ApiOperation("Get stations")
 	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Station> get() {
@@ -33,12 +38,15 @@ public class StationController {
 				.collect(Collectors.toList());
 	}
 
+	@ApiOperation("Create station")
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void add(@RequestBody NewStation station) {
+	public void add(@ApiParam("Station info")
+					@RequestBody NewStation station) {
 		stationService.save(station);
 	}
 
+	@ApiOperation("Get lines")
 	@GetMapping("/lines")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Line> getLines() {
@@ -48,9 +56,11 @@ public class StationController {
 				.collect(Collectors.toList());
 	}
 
+	@ApiOperation("Create line")
 	@PostMapping("/lines")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void add(@RequestBody NewLine line) {
+	public void add(@ApiParam("Line info")
+					@RequestBody NewLine line) {
 		stationService.save(line);
 	}
 }

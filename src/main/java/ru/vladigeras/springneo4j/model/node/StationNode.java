@@ -1,4 +1,4 @@
-package ru.vladigeras.springneo4j.model.entity;
+package ru.vladigeras.springneo4j.model.node;
 
 import org.neo4j.ogm.annotation.*;
 
@@ -6,7 +6,7 @@ import org.neo4j.ogm.annotation.*;
  * @author vladi_geras on 09.01.2020
  */
 @NodeEntity("Station")
-public class StationEntity {
+public class StationNode {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -15,7 +15,7 @@ public class StationEntity {
 	private String name;
 
 	@Relationship(type = "CONTAINS_IN")
-	private LineEntity line;
+	private LineNode line;
 
 	public Long getId() {
 		return id;
@@ -25,16 +25,16 @@ public class StationEntity {
 		return name;
 	}
 
-	public StationEntity setName(String name) {
+	public StationNode setName(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public LineEntity getLine() {
+	public LineNode getLine() {
 		return line;
 	}
 
-	public StationEntity setLine(LineEntity line) {
+	public StationNode setLine(LineNode line) {
 		this.line = line;
 		return this;
 	}
