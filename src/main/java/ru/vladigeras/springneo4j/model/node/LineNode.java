@@ -44,5 +44,4 @@ public class LineNode {
 	public List<StationNode> getStations() {
 		return stations;
 	}
-
 }

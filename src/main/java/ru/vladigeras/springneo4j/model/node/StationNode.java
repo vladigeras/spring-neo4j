@@ -1,6 +1,10 @@
 package ru.vladigeras.springneo4j.model.node;
 
 import org.neo4j.ogm.annotation.*;
+import ru.vladigeras.springneo4j.constant.RelationshipConstant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author vladi_geras on 09.01.2020
@@ -14,8 +18,18 @@ public class StationNode {
 	@Property(name = "name")
 	private String name;
 
-	@Relationship(type = "CONTAINS_IN")
+	@Relationship(type = RelationshipConstant.CONTAINS_IN)
 	private LineNode line;
+
+	@Relationship(type = RelationshipConstant.CONNECTED_TO, direction = Relationship.UNDIRECTED)
+	private List<Neighborhood> neighbors = new ArrayList<>();
+
+	public void addNeighbor(Neighborhood neighborhood) {
+		if (neighborhood != null) {
+			if (neighbors == null) neighbors = new ArrayList<>();
+			neighbors.add(neighborhood);
+		}
+	}
 
 	public Long getId() {
 		return id;
@@ -37,5 +51,9 @@ public class StationNode {
 	public StationNode setLine(LineNode line) {
 		this.line = line;
 		return this;
+	}
+
+	public List<Neighborhood> getNeighbors() {
+		return neighbors;
 	}
 }
